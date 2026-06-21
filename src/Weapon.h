@@ -18,8 +18,8 @@ public:
     );
 
 private:
-    float cooldown = 0.55f;
+    float cooldown = 0.85f;
     float timer = 0.0f;
-    float projectileSpeed = 18.0f;
-    float damage = 24.0f;
+    float projectileSpeed = 13.0f;
+    float damage = 10.0f;
 };

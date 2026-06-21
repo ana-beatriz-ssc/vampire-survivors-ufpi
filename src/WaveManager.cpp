@@ -20,12 +20,30 @@ void WaveManager::update(
     const Player& player,
     std::vector<Enemy>& enemies
 ) {
+    if (enemies.size() >= 120){
+        return;
+    }
+
     spawnTimer += deltaTime;
 
     const float interval = std::max(0.45f, 1.25f - elapsedTime * 0.003f);
+    
     if (spawnTimer >= interval) {
         spawnTimer = 0.0f;
-        spawnEnemy(elapsedTime, player, enemies);
+
+        int amount = 1;
+
+        if (elapsedTime >= 20.0f){
+            amount = 2;
+        }
+
+        if (elapsedTime >= 60.0f) {
+            amount = 3;
+        }
+
+        for (int i = 0; i < amount; i++){
+            spawnEnemy(elapsedTime, player, enemies);
+        }        
     }
 }
 
