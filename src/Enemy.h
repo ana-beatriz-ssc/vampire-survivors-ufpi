@@ -16,7 +16,7 @@ public:
     void takeDamage(float amount);
 
     EnemyType type = EnemyType::Basic;
-    float speed = 2.6f;
-    float life = 24.0f;
+    float speed = 2.8f;
+    float life = 30.0f;
     float damage = 10.0f;
 };

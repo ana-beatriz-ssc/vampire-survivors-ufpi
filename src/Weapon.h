@@ -18,7 +18,7 @@ public:
     );
 
 private:
-    float cooldown = 0.85f;
+    float cooldown = 0.8f;
     float timer = 0.0f;
     float projectileSpeed = 13.0f;
     float damage = 10.0f;

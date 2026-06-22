@@ -2,28 +2,35 @@
 
 #include <cmath>
 
-Enemy::Enemy(EnemyType enemyType) : type(enemyType) {
-    position.y = 0.6f;
+Enemy::Enemy(
+    EnemyType enemyType
+) : type(enemyType) {
+
+    active = true;
 
     switch (type) {
         case EnemyType::Basic:
-            radius = 0.6f;
-            speed = 2.8f;
-            life = 30.f;
+            radius = 0.60f;
+            speed = 2.80f;
+            life = 30.0f;
             damage = 10.0f;
+            position.y = 0.60f;
             break;
+
         case EnemyType::Fast:
             radius = 0.45f;
-            speed = 4.3f;
+            speed = 4.30f;
             life = 18.0f;
             damage = 8.0f;
+            position.y = 0.45f;
             break;
+
         case EnemyType::Tank:
-            radius = 0.9f;
-            speed = 1.7f;
+            radius = 0.90f;
+            speed = 1.70f;
             life = 80.0f;
             damage = 18.0f;
-            //position.y = 0.9f;
+            position.y = 0.90f;
             break;
     }
 }
