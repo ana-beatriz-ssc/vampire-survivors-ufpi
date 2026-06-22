@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <algorithm>
+#include <cmath>
 
 #include "Collision.h"
 
@@ -55,6 +56,8 @@ void Game::update(const InputState& input, float deltaTime) {
         }
     }
 
+    separateEnemies();
+
     Projectile newProjectile;
     if (weapon.updateAndShoot(player, enemies, deltaTime, newProjectile)) {
         projectiles.push_back(newProjectile);
@@ -75,6 +78,85 @@ void Game::update(const InputState& input, float deltaTime) {
 
     if (elapsedTime >= 300.0f) {
         victory = true;
+    }
+}
+
+void Game::separateEnemies() {
+    constexpr float EPSILON = 0.0001f;
+    constexpr float CORRECTION_STRENGTH = 0.8f;
+
+    for (std::size_t i = 0; i < enemies.size(); ++i) {
+        Enemy& enemyA = enemies[i];
+
+        if (!enemyA.active) {
+            continue;
+        }
+
+        for (
+            std::size_t j = i + 1;
+            j < enemies.size();
+            ++j
+        ) {
+            Enemy& enemyB = enemies[j];
+
+            if (!enemyB.active) {
+                continue;
+            }
+
+            const float dx =
+                enemyB.position.x -
+                enemyA.position.x;
+
+            const float dz =
+                enemyB.position.z -
+                enemyA.position.z;
+
+            const float minimumDistance =
+                enemyA.radius +
+                enemyB.radius;
+
+            const float distanceSquared =
+                dx * dx + dz * dz;
+
+            if (
+                distanceSquared >=
+                minimumDistance * minimumDistance
+            ) {
+                continue;
+            }
+
+            float directionX = 1.0f;
+            float directionZ = 0.0f;
+            float distance = 0.0f;
+
+            if (distanceSquared > EPSILON) {
+                distance =
+                    std::sqrt(distanceSquared);
+
+                directionX = dx / distance;
+                directionZ = dz / distance;
+            }
+
+            const float overlap =
+                minimumDistance - distance;
+
+            const float correction =
+                overlap *
+                0.5f *
+                CORRECTION_STRENGTH;
+
+            enemyA.position.x -=
+                directionX * correction;
+
+            enemyA.position.z -=
+                directionZ * correction;
+
+            enemyB.position.x +=
+                directionX * correction;
+
+            enemyB.position.z +=
+                directionZ * correction;
+        }
     }
 }
 

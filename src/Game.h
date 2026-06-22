@@ -26,6 +26,7 @@ public:
 
 private:
     void checkCollisions();
+    void separateEnemies();
     void removeInactiveEntities();
 
     Player player;
