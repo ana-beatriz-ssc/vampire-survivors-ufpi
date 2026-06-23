@@ -18,6 +18,7 @@ add_executable(vampire_survivors
     src/Player.cpp
     src/Enemy.cpp
     src/Projectile.cpp
+    src/XpOrb.cpp
     src/Weapon.cpp
     src/Collision.cpp
     src/WaveManager.cpp

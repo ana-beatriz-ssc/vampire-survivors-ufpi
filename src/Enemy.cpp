@@ -22,6 +22,7 @@ Enemy::Enemy(
             speed = 4.30f;
             life = 18.0f;
             damage = 8.0f;
+            xpReward = 8.0f;
             position.y = 0.45f;
             break;
 
@@ -30,6 +31,7 @@ Enemy::Enemy(
             speed = 1.70f;
             life = 80.0f;
             damage = 18.0f;
+            xpReward = 20.0f;
             position.y = 0.90f;
             break;
     }

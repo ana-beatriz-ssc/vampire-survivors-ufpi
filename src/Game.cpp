@@ -12,6 +12,7 @@ void Game::initialize() {
 void Game::restart() {
     player.reset();
     enemies.clear();
+    xpOrbs.clear();
     projectiles.clear();
     weapon.reset();
     waveManager.reset();
@@ -160,6 +161,19 @@ void Game::separateEnemies() {
     }
 }
 
+void Game::spawnXpOrb(
+    const Enemy& enemy
+) {
+    XpOrb orb;
+
+    orb.position = enemy.position;
+    orb.position.y = 0.28f;
+
+    orb.value = enemy.xpReward;
+
+    xpOrbs.push_back(orb);
+}
+
 void Game::checkCollisions() {
     for (Enemy& enemy : enemies) {
         if (!enemy.active) {
@@ -198,9 +212,26 @@ void Game::checkCollisions() {
 
                 if (wasAlive && !enemy.active) {
                     ++kills;
+                    spawnXpOrb(enemy);
                 }
                 break;
             }
+        }
+    }
+
+    for (XpOrb& orb : xpOrbs) {
+    if (!orb.active) {
+        continue;
+    }
+
+    if (Collision::circlesIntersectXZ(
+            player.position,
+            player.radius,
+            orb.position,
+            orb.radius
+        )) {
+        player.xp += orb.value;
+        orb.active = false;
         }
     }
 }
@@ -223,6 +254,22 @@ void Game::removeInactiveEntities() {
         ),
         projectiles.end()
     );
+
+    for (XpOrb& orb : xpOrbs) {
+    if (!orb.active) {
+        continue;
+    }
+
+    if (Collision::circlesIntersectXZ(
+            player.position,
+            player.radius,
+            orb.position,
+            orb.radius
+        )) {
+        player.xp += orb.value;
+        orb.active = false;
+        }
+    }
 }
 
 const Player& Game::getPlayer() const {
@@ -251,4 +298,8 @@ bool Game::isGameOver() const {
 
 bool Game::isVictory() const {
     return victory;
+}
+
+const std::vector<XpOrb>& Game::getXpOrbs() const {
+    return xpOrbs;
 }

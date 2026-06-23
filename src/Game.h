@@ -8,6 +8,7 @@
 #include "Projectile.h"
 #include "WaveManager.h"
 #include "Weapon.h"
+#include "XpOrb.h"
 
 class Game {
 public:
@@ -18,6 +19,7 @@ public:
     const Player& getPlayer() const;
     const std::vector<Enemy>& getEnemies() const;
     const std::vector<Projectile>& getProjectiles() const;
+    const std::vector<XpOrb>& getXpOrbs() const;
 
     float getElapsedTime() const;
     int getKills() const;
@@ -27,11 +29,15 @@ public:
 private:
     void checkCollisions();
     void separateEnemies();
+
+    void spawnXpOrb(const Enemy& enemy);
+
     void removeInactiveEntities();
 
     Player player;
     std::vector<Enemy> enemies;
     std::vector<Projectile> projectiles;
+    std::vector<XpOrb> xpOrbs;
 
     Weapon weapon;
     WaveManager waveManager;

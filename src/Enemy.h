@@ -19,4 +19,5 @@ public:
     float speed = 2.8f;
     float life = 30.0f;
     float damage = 10.0f;
+    float xpReward = 5.0f;
 };
