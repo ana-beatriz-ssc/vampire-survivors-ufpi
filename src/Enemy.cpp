@@ -12,7 +12,7 @@ Enemy::Enemy(
         case EnemyType::Basic:
             radius = 0.60f;
             speed = 2.80f;
-            life = 30.0f;
+            life = 10.0f;
             damage = 10.0f;
             position.y = 0.60f;
             break;

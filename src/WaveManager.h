@@ -25,6 +25,10 @@ private:
         std::vector<Enemy>& enemies
     );
 
+    EnemyType chooseEnemyType(
+        float elapsedTime
+    );
+
     float spawnTimer = 0.0f;
     std::mt19937 randomEngine;
 };
