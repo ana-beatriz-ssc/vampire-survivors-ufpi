@@ -32,6 +32,9 @@ private:
 
     void spawnXpOrb(const Enemy& enemy);
 
+    void processLevelUps();
+    void applyAutomaticUpgrade();
+
     void removeInactiveEntities();
 
     Player player;

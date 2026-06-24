@@ -71,6 +71,7 @@ void Game::update(const InputState& input, float deltaTime) {
     }
 
     checkCollisions();
+    processLevelUps();
     removeInactiveEntities();
 
     if (player.life <= 0.0f) {
@@ -269,6 +270,47 @@ void Game::removeInactiveEntities() {
         player.xp += orb.value;
         orb.active = false;
         }
+    }
+}
+
+void Game::processLevelUps() {
+    while (
+        player.xp >=
+        player.xpToNextLevel
+    ) {
+        player.xp -=
+            player.xpToNextLevel;
+
+        ++player.level;
+
+        player.xpToNextLevel =
+            static_cast<float>(
+                std::ceil(
+                    player.xpToNextLevel *
+                    1.25f
+                )
+            );
+
+        applyAutomaticUpgrade();
+    }
+}
+
+void Game::applyAutomaticUpgrade() {
+    const int upgradeIndex =
+        (player.level - 2) % 3;
+
+    switch (upgradeIndex) {
+        case 0:
+            weapon.increaseDamage(2.0f);
+            break;
+
+        case 1:
+            weapon.reduceCooldown(0.05f);
+            break;
+
+        case 2:
+            player.speed += 0.25f;
+            break;
     }
 }
 

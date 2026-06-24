@@ -1,12 +1,16 @@
 #include "Weapon.h"
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
 
 #include "Collision.h"
 
 void Weapon::reset() {
+    cooldown = 0.85f;
     timer = 0.0f;
+    projectileSpeed = 13.0f;
+    damage = 10.0f;
 }
 
 bool Weapon::updateAndShoot(
@@ -62,4 +66,23 @@ bool Weapon::updateAndShoot(
     };
 
     return true;
+}
+
+void Weapon::increaseDamage(float amount) {
+    damage += amount;
+}
+
+void Weapon::reduceCooldown(float amount) {
+    cooldown = std::max(
+        0.20f,
+        cooldown - amount
+    );
+}
+
+float Weapon::getDamage() const {
+    return damage;
+}
+
+float Weapon::getCooldown() const {
+    return cooldown;
 }

@@ -17,8 +17,14 @@ public:
         Projectile& outputProjectile
     );
 
+    void increaseDamage(float amount);
+    void reduceCooldown(float amount);
+
+    float getDamage() const;
+    float getCooldown() const;
+
 private:
-    float cooldown = 0.8f;
+    float cooldown = 0.85f;
     float timer = 0.0f;
     float projectileSpeed = 13.0f;
     float damage = 10.0f;
